@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Скачать Collector</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg1:#0b1026;--bg2:#050810;--card:rgba(255,255,255,.06);--border:rgba(255,255,255,.16);--accent1:#ffd166;--accent2:#ffb703;--text:#f8fafc;--sub:#cbd5e1}
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+    body{background:radial-gradient(1200px 800px at 50% 0,#16213f 0,var(--bg1) 40%,var(--bg2) 100%);color:var(--text);min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:24px;line-height:1.6}
+    .card{width:min(440px,94vw);background:radial-gradient(600px 200px at 50% -10%,rgba(255,209,102,.18),transparent),linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.03));border:1px solid var(--border);border-radius:18px;box-shadow:0 60px 120px rgba(0,0,0,.8);backdrop-filter:blur(12px);overflow:hidden;position:relative}
+    .card:before{content:"";position:absolute;inset:0;background:radial-gradient(400px 120px at 50% 0,rgba(255,209,102,.12),transparent);pointer-events:none}
+    .inner{position:relative;display:flex;flex-direction:column;gap:14px}
+    .head{padding:26px 28px 0;text-align:center;display:flex;flex-direction:column;gap:8px}
+    .badge{align-self:center;padding:6px 12px;border-radius:999px;font-size:11px;letter-spacing:6px;text-transform:uppercase;background:linear-gradient(90deg,rgba(255,209,102,.9),rgba(255,247,214,.9));color:#1f1400;font-weight:700}
+    .head h1{font-size:34px;letter-spacing:14px;text-transform:uppercase;background:linear-gradient(90deg,#ffd166,#fff3c4,#ffd166);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .head p{font-size:12px;text-transform:uppercase;letter-spacing:8px;color:var(--sub)}
+    .body{display:flex;flex-direction:column;gap:12px;padding:14px 28px 0}
+    .field{display:flex;flex-direction:column;gap:10px}
+    .input{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:999px;border:1px solid transparent;background:linear-gradient(#0b1026,#0b1026) padding-box,linear-gradient(90deg,rgba(255,209,102,.9),rgba(255,247,214,.4)) border-box}
+    .input input{flex:1;background:transparent;border:0;color:var(--text);font-size:14px;text-align:center;letter-spacing:10px;text-transform:uppercase}
+    .input input::placeholder{color:rgba(203,213,225,.6);letter-spacing:4px;text-transform:none}
+    .input input:focus{outline:none}
+    .btn{display:flex;align-items:center;justify-content:center;gap:12px;padding:13px 18px;border-radius:999px;text-decoration:none;color:#1f1400;font-weight:700;background:linear-gradient(90deg,var(--accent1),var(--accent2));box-shadow:0 30px 60px rgba(255,183,3,.25);transition:transform .18s,box-shadow .18s}
+    .btn:hover{transform:translateY(-3px);box-shadow:0 36px 70px rgba(255,183,3,.32)}
+    .btn:active{transform:translateY(-1px)}
+    .btn.ghost{background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.04));color:var(--text);border:1px solid rgba(255,255,255,.22);box-shadow:none}
+    .btn.ghost:hover{background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.06))}
+    .btn-row{display:flex;flex-direction:column;gap:10px}
+    .btn-meta{margin-left:auto;font-size:12px;opacity:.8;font-weight:600}
+    .hint{font-size:12px;text-align:center;color:var(--sub)}
+    .error{font-size:13px;text-align:center;color:#f87171}
+    .foot{padding:18px 28px 26px;text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:6px;color:rgba(203,213,225,.5)}
+    .hide{display:none!important}
+    @media (max-width:420px){.head h1{letter-spacing:10px;font-size:30px}.head p{letter-spacing:6px}}
+  </style>
+</head>
+<body>
+  <div class="card" id="lock">
+    <div class="inner">
+      <header class="head">
+        <span class="badge">Beta Access</span>
+        <h1>COLLECTOR</h1>
+        <p>Только для бета-тестеров</p>
+      </header>
+      <main class="body">
+        <div class="field">
+          <div class="input">
+            <input id="pass" type="password" placeholder="Ключ доступа" autocomplete="off" spellcheck="false">
+          </div>
+          <button class="btn" id="enter">Войти</button>
+        </div>
+        <div id="err" class="error hide">Неверный ключ доступа</div>
+        <p class="hint">Нужен ключ формата <strong>UID:MMSTEAM_BETATESTER</strong></p>
+      </main>
+      <footer class="foot">Оффлайн-билды • Без CDN</footer>
+    </div>
+  </div>
+  <div class="card hide" id="dl">
+    <div class="inner">
+      <header class="head">
+        <span class="badge">Download</span>
+        <h1>COLLECTOR</h1>
+        <p>Актуальная сборка</p>
+      </header>
+      <main class="body">
+        <div class="btn-row">
+          <a class="btn" href="files/Collector.exe" download>
+            <span>Скачать для Windows</span>
+            <span class="btn-meta">EXE</span>
+          </a>
+          <a class="btn ghost" href="files/Collector.apk" download>
+            <span>Скачать для Android</span>
+            <span class="btn-meta">APK</span>
+          </a>
+        </div>
+        <p class="hint">Для Android: разреши установку из этого источника при первом запуске</p>
+      </main>
+      <footer class="foot">Версия для оффлайн-игры</footer>
+    </div>
+  </div>
+  <script>
+    const KEY = 'UID:MMSTEAM_BETATESTER';
+    const lock = document.getElementById('lock');
+    const dl = document.getElementById('dl');
+    const pass = document.getElementById('pass');
+    const btn = document.getElementById('enter');
+    const err = document.getElementById('err');
+    const storageKey = 'collector_dl_key';
+
+    function enter() {
+      const v = pass.value.trim();
+      if (v === KEY) {
+        lock.classList.add('hide');
+        dl.classList.remove('hide');
+        try { localStorage.setItem(storageKey, v); } catch(e) {}
+        err.classList.add('hide');
+      } else {
+        err.classList.remove('hide');
+        pass.focus();
+        pass.select();
+      }
+    }
+
+    btn.addEventListener('click', enter);
+    pass.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        enter();
+      }
+    });
+
+    try {
+      if (localStorage.getItem(storageKey) === KEY) {
+        lock.classList.add('hide');
+        dl.classList.remove('hide');
+      }
+    } catch(e) {}
+  </script>
+</body>
+</html>
